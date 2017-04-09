@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11 -std=c++11 -g   CMakeFiles/getPic.dir/getPic.cpp.o  -o getPic -rdynamic -lrealsense -lGLU -lGL -lm -lglfw 
