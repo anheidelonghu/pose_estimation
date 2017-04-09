@@ -14,6 +14,7 @@ int const FRAMERATE 	= 60;
 // Named windows
 char* const WINDOW_DEPTH = "Depth Image";
 char* const WINDOW_RGB	 = "RGB Image";
+char* const WINDOW_DEPTH_ALIGN = "Align Depth Image";
 
 
 context 	_rs_ctx;

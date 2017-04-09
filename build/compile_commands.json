@@ -1,12 +1,12 @@
 [
 {
   "directory": "/home/hxx/code/hxx_proj/build",
-  "command": "/usr/bin/c++     -std=c++11 -std=c++11 -g   -o CMakeFiles/getPic.dir/getPic.cpp.o -c /home/hxx/code/hxx_proj/getPic.cpp",
+  "command": "/usr/bin/c++    -I/usr/local/include -I/usr/local/include/opencv  -std=c++11 -std=c++11 -g   -o CMakeFiles/getPic.dir/getPic.cpp.o -c /home/hxx/code/hxx_proj/getPic.cpp",
   "file": "/home/hxx/code/hxx_proj/getPic.cpp"
 },
 {
   "directory": "/home/hxx/code/hxx_proj/build",
-  "command": "/usr/bin/c++     -std=c++11 -std=c++11 -g   -o CMakeFiles/main.dir/main.cpp.o -c /home/hxx/code/hxx_proj/main.cpp",
+  "command": "/usr/bin/c++    -isystem /usr/local/include -isystem /usr/local/include/opencv  -std=c++11 -std=c++11 -g   -o CMakeFiles/main.dir/main.cpp.o -c /home/hxx/code/hxx_proj/main.cpp",
   "file": "/home/hxx/code/hxx_proj/main.cpp"
 }
 ]

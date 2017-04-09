@@ -93,6 +93,22 @@ main: CMakeFiles/main.dir/build.make
 main: /usr/lib/x86_64-linux-gnu/libGLU.so
 main: /usr/lib/x86_64-linux-gnu/libGL.so
 main: /usr/lib/x86_64-linux-gnu/libglfw.so
+main: /usr/local/lib/libopencv_ml.so.3.2.0
+main: /usr/local/lib/libopencv_objdetect.so.3.2.0
+main: /usr/local/lib/libopencv_shape.so.3.2.0
+main: /usr/local/lib/libopencv_stitching.so.3.2.0
+main: /usr/local/lib/libopencv_superres.so.3.2.0
+main: /usr/local/lib/libopencv_videostab.so.3.2.0
+main: /usr/local/lib/libopencv_calib3d.so.3.2.0
+main: /usr/local/lib/libopencv_features2d.so.3.2.0
+main: /usr/local/lib/libopencv_flann.so.3.2.0
+main: /usr/local/lib/libopencv_highgui.so.3.2.0
+main: /usr/local/lib/libopencv_photo.so.3.2.0
+main: /usr/local/lib/libopencv_video.so.3.2.0
+main: /usr/local/lib/libopencv_videoio.so.3.2.0
+main: /usr/local/lib/libopencv_imgcodecs.so.3.2.0
+main: /usr/local/lib/libopencv_imgproc.so.3.2.0
+main: /usr/local/lib/libopencv_core.so.3.2.0
 main: CMakeFiles/main.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hxx/code/hxx_proj/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)

@@ -5,3 +5,7 @@ CMakeFiles/getPic.dir/getPic.cpp.o
  /home/hxx/code/hxx_proj/example.hpp
  /home/hxx/code/hxx_proj/getPic.cpp
  /home/hxx/code/hxx_proj/third_party/stb_easy_font.h
+ /usr/local/include/librealsense/rs.h
+ /usr/local/include/librealsense/rs.hpp
+ /usr/local/include/librealsense/rscore.hpp
+ /usr/local/include/librealsense/rsutil.h

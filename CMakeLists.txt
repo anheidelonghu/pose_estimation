@@ -22,7 +22,8 @@ set(DEPENDENCIES realsense ${OPENGL_LIBRARIES})
 
 #find opencv 3.2 package,version unsure
 find_package(OpenCV 3.2 REQUIRED)
-list(APPEND DEPENDENCIES OPENCV_LIBS)
+#find_package(OpenCV REQUIRED)
+#list(APPEND DEPENDENCIES ${OPENCV_LIBS})
 
 if(WIN32)
     add_subdirectory(third_party/glfw)
@@ -49,14 +50,16 @@ else()
                   /usr/X11R6/lib
     )
     list(APPEND DEPENDENCIES m ${GLFW_LIBRARIES} ${LIBUSB1_LIBRARIES})
-    include_directories(${GLFW_INCLUDE_DIR})
+    include_directories(${GLFW_INCLUDE_DIR} 
+			${OpenCV_INCLUDE_DIRS}
+			)
 endif()
 
 add_executable(getPic getPic.cpp)
 target_link_libraries(getPic ${DEPENDENCIES})
 
 add_executable(main main.cpp)
-target_link_libraries(main ${DEPENDENCIES})
+target_link_libraries(main ${DEPENDENCIES} ${OpenCV_LIBS})
 
 
 install(TARGETS 

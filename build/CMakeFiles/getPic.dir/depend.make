@@ -4,4 +4,8 @@
 CMakeFiles/getPic.dir/getPic.cpp.o: ../example.hpp
 CMakeFiles/getPic.dir/getPic.cpp.o: ../getPic.cpp
 CMakeFiles/getPic.dir/getPic.cpp.o: ../third_party/stb_easy_font.h
+CMakeFiles/getPic.dir/getPic.cpp.o: /usr/local/include/librealsense/rs.h
+CMakeFiles/getPic.dir/getPic.cpp.o: /usr/local/include/librealsense/rs.hpp
+CMakeFiles/getPic.dir/getPic.cpp.o: /usr/local/include/librealsense/rscore.hpp
+CMakeFiles/getPic.dir/getPic.cpp.o: /usr/local/include/librealsense/rsutil.h
 
