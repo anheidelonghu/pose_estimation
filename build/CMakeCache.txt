@@ -183,6 +183,12 @@ OPENGL_glu_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libGLU.so
 //Path to a file.
 OPENGL_xmesa_INCLUDE_DIR:PATH=OPENGL_xmesa_INCLUDE_DIR-NOTFOUND
 
+//The directory containing a CMake configuration file for OpenCV.
+OpenCV_DIR:PATH=/usr/local/share/OpenCV
+
+//The directory containing a CMake configuration file for OpenCv.
+OpenCv_DIR:PATH=OpenCv_DIR-NOTFOUND
+
 //Value Computed by CMake
 hxx_proj_BINARY_DIR:STATIC=/home/hxx/code/hxx_proj/build
 
@@ -323,6 +329,8 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 COMPILER_SUPPORTS_CXX0X:INTERNAL=1
 //Test COMPILER_SUPPORTS_CXX11
 COMPILER_SUPPORTS_CXX11:INTERNAL=1
+//Details about finding OpenCV
+FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[/usr/local][v3.2.0(3.2)]
 //Details about finding OpenGL
 FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/usr/lib/x86_64-linux-gnu/libGL.so][/usr/include][v()]
 //ADVANCED property for variable: OPENGL_INCLUDE_DIR

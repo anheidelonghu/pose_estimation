@@ -20,6 +20,10 @@ endif()
 find_package(OpenGL REQUIRED)
 set(DEPENDENCIES realsense ${OPENGL_LIBRARIES})
 
+#find opencv 3.2 package,version unsure
+find_package(OpenCV 3.2 REQUIRED)
+list(APPEND DEPENDENCIES OPENCV_LIBS)
+
 if(WIN32)
     add_subdirectory(third_party/glfw)
     list(APPEND DEPENDENCIES glfw3)
@@ -51,4 +55,11 @@ endif()
 add_executable(getPic getPic.cpp)
 target_link_libraries(getPic ${DEPENDENCIES})
 
-install(TARGETS getPic RUNTIME DESTINATION bin)
+add_executable(main main.cpp)
+target_link_libraries(main ${DEPENDENCIES})
+
+
+install(TARGETS 
+	getPic
+	main
+	RUNTIME DESTINATION bin)

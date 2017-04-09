@@ -78,6 +78,17 @@ list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
 
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -110,17 +121,6 @@ install/local: preinstall
 install/local/fast: install/local
 
 .PHONY : install/local/fast
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -167,6 +167,19 @@ getPic/fast:
 	$(MAKE) -f CMakeFiles/getPic.dir/build.make CMakeFiles/getPic.dir/build
 .PHONY : getPic/fast
 
+#=============================================================================
+# Target rules for targets named main
+
+# Build rule for target.
+main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 main
+.PHONY : main
+
+# fast build rule for target.
+main/fast:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
+.PHONY : main/fast
+
 getPic.o: getPic.cpp.o
 
 .PHONY : getPic.o
@@ -194,6 +207,33 @@ getPic.cpp.s:
 	$(MAKE) -f CMakeFiles/getPic.dir/build.make CMakeFiles/getPic.dir/getPic.cpp.s
 .PHONY : getPic.cpp.s
 
+main.o: main.cpp.o
+
+.PHONY : main.o
+
+# target to build an object file
+main.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.o
+.PHONY : main.cpp.o
+
+main.i: main.cpp.i
+
+.PHONY : main.i
+
+# target to preprocess a source file
+main.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.i
+.PHONY : main.cpp.i
+
+main.s: main.cpp.s
+
+.PHONY : main.s
+
+# target to generate assembly for a file
+main.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
+.PHONY : main.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -202,14 +242,18 @@ help:
 	@echo "... depend"
 	@echo "... install"
 	@echo "... list_install_components"
+	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... getPic"
+	@echo "... main"
 	@echo "... install/strip"
 	@echo "... install/local"
-	@echo "... edit_cache"
 	@echo "... getPic.o"
 	@echo "... getPic.i"
 	@echo "... getPic.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 .PHONY : help
 
 

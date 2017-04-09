@@ -20,6 +20,7 @@ struct rgb_pixel
 
 int main(int argc, char * argv[]) try
 {
+    //try to initial realsense and config it
     rs::log_to_console(rs::log_severity::warn);
     //rs::log_to_file(rs::log_severity::debug, "librealsense.log");
 

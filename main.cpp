@@ -1,85 +1,152 @@
-// License: Apache 2.0. See LICENSE file in root directory.
-// Copyright(c) 2015 Intel Corporation. All Rights Reserved.
-
 #include <librealsense/rs.hpp>
-#include "example.hpp"
-
-#include <sstream>
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui.hpp>
 #include <iostream>
-#include <iomanip>
-#include <thread>
 
-texture_buffer buffers[6];
+using namespace std;
+using namespace rs;
 
-#pragma pack(push, 1)
-struct rgb_pixel
+// Window size and frame rate
+int const INPUT_WIDTH 	= 320;
+int const INPUT_HEIGHT 	= 240;
+int const FRAMERATE 	= 60;
+
+// Named windows
+char* const WINDOW_DEPTH = "Depth Image";
+char* const WINDOW_RGB	 = "RGB Image";
+
+
+context 	_rs_ctx;
+device* 	_rs_camera = NULL;
+intrinsics 	_depth_intrin;
+intrinsics  _color_intrin;
+bool 		_loop = true;
+
+
+
+// Initialize the application state. Upon success will return the static app_state vars address
+bool initialize_streaming( )
 {
-    uint8_t r,g,b; 
-};
-#pragma pack(pop)
+	bool success = false;
+	if( _rs_ctx.get_device_count( ) > 0 )
+	{
+		_rs_camera = _rs_ctx.get_device( 0 );
 
-int main(int argc, char * argv[]) try
-{
-    //try to initial realsense and config it
-    rs::log_to_console(rs::log_severity::warn);
-    //rs::log_to_file(rs::log_severity::debug, "librealsense.log");
+		_rs_camera->enable_stream( rs::stream::color, INPUT_WIDTH, INPUT_HEIGHT, rs::format::rgb8, FRAMERATE );
+		_rs_camera->enable_stream( rs::stream::depth, INPUT_WIDTH, INPUT_HEIGHT, rs::format::z16, FRAMERATE );
 
-    rs::context ctx;
-    if(ctx.get_device_count() == 0) throw std::runtime_error("No device detected. Is it plugged in?");
-    rs::device & dev = *ctx.get_device(0);
+		_rs_camera->start( );
 
-    dev.enable_stream(rs::stream::depth, rs::preset::best_quality);
-    dev.enable_stream(rs::stream::color, rs::preset::best_quality);
-    try { dev.enable_stream(rs::stream::infrared2, rs::preset::best_quality); } catch(...) {}
-    dev.start();
-
-    // Open a GLFW window
-    glfwInit();
-    std::ostringstream ss; ss << "CPP Image Alignment Example (" << dev.get_name() << ")";
-    GLFWwindow * win = glfwCreateWindow(dev.is_stream_enabled(rs::stream::infrared2) ? 1920 : 1280, 960, ss.str().c_str(), 0, 0);
-    glfwMakeContextCurrent(win);
-
-    while (!glfwWindowShouldClose(win))
-    {
-        // Wait for new images
-        glfwPollEvents();
-        dev.wait_for_frames();
-
-        // Clear the framebuffer
-        int w,h;
-        glfwGetFramebufferSize(win, &w, &h);
-        glViewport(0, 0, w, h);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        // Draw the images        
-        glPushMatrix();
-        glfwGetWindowSize(win, &w, &h);
-        glOrtho(0, w, h, 0, -1, +1);
-        int s = w / (dev.is_stream_enabled(rs::stream::infrared2) ? 3 : 2);
-        buffers[0].show(dev, rs::stream::color, 0, 0, s, h-h/2);
-        buffers[1].show(dev, rs::stream::color_aligned_to_depth, s, 0, s, h-h/2);
-        buffers[2].show(dev, rs::stream::depth_aligned_to_color, 0, h/2, s, h-h/2);
-        buffers[3].show(dev, rs::stream::depth, s, h/2, s, h-h/2);
-        if(dev.is_stream_enabled(rs::stream::infrared2))
-        {
-            buffers[4].show(dev, rs::stream::infrared2_aligned_to_depth, 2*s, 0, s, h-h/2);
-            buffers[5].show(dev, rs::stream::depth_aligned_to_infrared2, 2*s, h/2, s, h-h/2);
-        }
-        glPopMatrix();
-        glfwSwapBuffers(win);
-    }
-
-    glfwDestroyWindow(win);
-    glfwTerminate();
-    return EXIT_SUCCESS;
+		success = true;
+	}
+	return success;
 }
-catch(const rs::error & e)
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+// If the left mouse button was clicked on either image, stop streaming and close windows.
+/////////////////////////////////////////////////////////////////////////////
+static void onMouse( int event, int x, int y, int, void* window_name )
 {
-    std::cerr << "RealSense error calling " << e.get_failed_function() << "(" << e.get_failed_args() << "):\n    " << e.what() << std::endl;
-    return EXIT_FAILURE;
+	if( event == cv::EVENT_LBUTTONDOWN )
+	{
+		_loop = false;
+	}
 }
-catch(const std::exception & e)
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Create the depth and RGB windows, set their mouse callbacks.
+// Required if we want to create a window and have the ability to use it in
+// different functions
+/////////////////////////////////////////////////////////////////////////////
+void setup_windows( )
 {
-    std::cerr << e.what() << std::endl;
-    return EXIT_FAILURE;
+	cv::namedWindow( WINDOW_DEPTH, 0 );
+	cv::namedWindow( WINDOW_RGB, 0 );
+
+	cv::setMouseCallback( WINDOW_DEPTH, onMouse, WINDOW_DEPTH );
+	cv::setMouseCallback( WINDOW_RGB, onMouse, WINDOW_RGB );
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Called every frame gets the data from streams and displays them using OpenCV.
+/////////////////////////////////////////////////////////////////////////////
+bool display_next_frame( )
+{
+	// Get current frames intrinsic data.
+	_depth_intrin 	= _rs_camera->get_stream_intrinsics( rs::stream::depth );
+	_color_intrin 	= _rs_camera->get_stream_intrinsics( rs::stream::color );
+
+	// Create depth image
+	cv::Mat depth16( _depth_intrin.height,
+					 _depth_intrin.width,
+					 CV_16U,
+					 (uchar *)_rs_camera->get_frame_data( rs::stream::depth ) );
+
+	// Create color image
+	cv::Mat rgb( _color_intrin.height,
+				 _color_intrin.width,
+				 CV_8UC3,
+				 (uchar *)_rs_camera->get_frame_data( rs::stream::color ) );
+
+	// < 800
+	cv::Mat depth8u = depth16;
+	depth8u.convertTo( depth8u, CV_8UC1, 255.0/1000 );
+
+	imshow( WINDOW_DEPTH, depth8u );
+	cvWaitKey( 1 );
+
+	cv::cvtColor( rgb, rgb, cv::COLOR_BGR2RGB );
+	imshow( WINDOW_RGB, rgb );
+	cvWaitKey( 1 );
+
+	return true;
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Main function
+/////////////////////////////////////////////////////////////////////////////
+int main( ) try
+{
+	rs::log_to_console( rs::log_severity::warn );
+
+	if( !initialize_streaming( ) )
+	{
+		std::cout << "Unable to locate a camera" << std::endl;
+		rs::log_to_console( rs::log_severity::fatal );
+		return EXIT_FAILURE;
+	}
+
+	setup_windows( );
+
+	// Loop until someone left clicks on either of the images in either window.
+	while( _loop )
+	{
+		if( _rs_camera->is_streaming( ) )
+			_rs_camera->wait_for_frames( );
+
+		display_next_frame( );
+	}
+
+	_rs_camera->stop( );
+	cv::destroyAllWindows( );
+
+	return EXIT_SUCCESS;
+}
+catch( const rs::error & e )
+{
+	std::cerr << "RealSense error calling " << e.get_failed_function() << "(" << e.get_failed_args() << "):\n    " << e.what() << std::endl;
+	return EXIT_FAILURE;
+}
+catch( const std::exception & e )
+{
+	std::cerr << e.what() << std::endl;
+	return EXIT_FAILURE;
 }

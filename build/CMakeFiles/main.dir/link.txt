@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11 -std=c++11 -g   CMakeFiles/main.dir/main.cpp.o  -o main -rdynamic -lrealsense -lGLU -lGL -lOPENCV_LIBS -lm -lglfw 
