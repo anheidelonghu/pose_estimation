@@ -15,12 +15,15 @@ int const FRAMERATE 	= 60;
 char* const WINDOW_DEPTH = "Depth Image";
 char* const WINDOW_RGB	 = "RGB Image";
 char* const WINDOW_DEPTH_ALIGN = "Align Depth Image";
+char* const WINDOW_RGB_ALIGN = "Align RGB Image";
 
 
 context 	_rs_ctx;
 device* 	_rs_camera = NULL;
 intrinsics 	_depth_intrin;
-intrinsics  _color_intrin;
+intrinsics  	_color_intrin;
+intrinsics 	_depth_align_intrin;
+intrinsics  	_color_align_intrin;
 bool 		_loop = true;
 
 
@@ -35,7 +38,9 @@ bool initialize_streaming( )
 
 		_rs_camera->enable_stream( rs::stream::color, INPUT_WIDTH, INPUT_HEIGHT, rs::format::rgb8, FRAMERATE );
 		_rs_camera->enable_stream( rs::stream::depth, INPUT_WIDTH, INPUT_HEIGHT, rs::format::z16, FRAMERATE );
-
+		//_rs_camera->enable_stream( rs::stream::color_aligned_to_depth, INPUT_WIDTH, INPUT_HEIGHT, rs::format::rgb8, FRAMERATE );
+		//_rs_camera->enable_stream( rs::stream::depth_aligned_to_color, INPUT_WIDTH, INPUT_HEIGHT, rs::format::z16, FRAMERATE );
+		
 		_rs_camera->start( );
 
 		success = true;
@@ -67,9 +72,14 @@ void setup_windows( )
 {
 	cv::namedWindow( WINDOW_DEPTH, 0 );
 	cv::namedWindow( WINDOW_RGB, 0 );
+	cv::namedWindow( WINDOW_DEPTH_ALIGN, 0);
+	cv::namedWindow( WINDOW_RGB_ALIGN, 0);
+	
 
 	cv::setMouseCallback( WINDOW_DEPTH, onMouse, WINDOW_DEPTH );
 	cv::setMouseCallback( WINDOW_RGB, onMouse, WINDOW_RGB );
+	cv::setMouseCallback( WINDOW_DEPTH_ALIGN, onMouse, WINDOW_DEPTH_ALIGN );
+	cv::setMouseCallback( WINDOW_RGB_ALIGN, onMouse, WINDOW_RGB_ALIGN );
 }
 
 
@@ -82,7 +92,8 @@ bool display_next_frame( )
 	// Get current frames intrinsic data.
 	_depth_intrin 	= _rs_camera->get_stream_intrinsics( rs::stream::depth );
 	_color_intrin 	= _rs_camera->get_stream_intrinsics( rs::stream::color );
-
+	_depth_align_intrin = _rs_camera->get_stream_intrinsics( rs::stream::depth_aligned_to_color );
+	_color_align_intrin 	= _rs_camera->get_stream_intrinsics( rs::stream::color_aligned_to_depth );
 	// Create depth image
 	cv::Mat depth16( _depth_intrin.height,
 					 _depth_intrin.width,
@@ -94,17 +105,37 @@ bool display_next_frame( )
 				 _color_intrin.width,
 				 CV_8UC3,
 				 (uchar *)_rs_camera->get_frame_data( rs::stream::color ) );
+	
+	cv::Mat depth16_a(_depth_align_intrin.height,
+			  _depth_align_intrin.width,
+			  CV_16U,
+			  (uchar *)_rs_camera->get_frame_data( rs::stream::depth_aligned_to_color) );
+	cv::Mat rgb_a( _color_align_intrin.height,
+			  _color_align_intrin.width,
+			  CV_8UC3,
+			  (uchar *)_rs_camera->get_frame_data( rs::stream::color_aligned_to_depth ) );
 
 	// < 800
 	cv::Mat depth8u = depth16;
 	depth8u.convertTo( depth8u, CV_8UC1, 255.0/1000 );
-
 	imshow( WINDOW_DEPTH, depth8u );
 	cvWaitKey( 1 );
-
+	
+	cv::cvtColor( rgb_a, rgb_a, cv::COLOR_BGR2RGB );
+	imshow( WINDOW_RGB_ALIGN, rgb_a );
+	cvWaitKey( 1 );
+	
+	cv::Mat depth8u_align = depth16_a;
+	depth8u_align.convertTo( depth8u_align, CV_8UC1, 255.0/1000);
+	imshow( WINDOW_DEPTH_ALIGN, depth8u_align );
+	cvWaitKey( 1 );
+	
 	cv::cvtColor( rgb, rgb, cv::COLOR_BGR2RGB );
 	imshow( WINDOW_RGB, rgb );
 	cvWaitKey( 1 );
+	
+
+	
 
 	return true;
 }
