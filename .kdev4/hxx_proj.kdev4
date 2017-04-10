@@ -25,17 +25,17 @@ Launch Configurations=Launch Configuration 0
 [Launch][Launch Configuration 0]
 Configured Launch Modes=execute
 Configured Launchers=nativeAppLauncher
-Name=getPic
+Name=New Compiled Binary Launcher
 Type=Native Application
 
 [Launch][Launch Configuration 0][Data]
 Arguments=
-Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x02\x00\x00\x00\x10\x00h\x00x\x00x\x00_\x00p\x00r\x00o\x00j\x00\x00\x00\x0c\x00g\x00e\x00t\x00P\x00i\x00c)
-Dependency Action=Build
+Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x00)
+Dependency Action=Nothing
 EnvironmentGroup=
 Executable=file:///home/hxx/code/hxx_proj/
 External Terminal=konsole --noclose --workdir %workdir -e %exe
-Project Target=hxx_proj,getPic
+Project Target=hxx_proj,main
 Use External Terminal=false
 Working Directory=
 isExecutable=false

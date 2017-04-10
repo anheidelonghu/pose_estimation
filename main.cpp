@@ -2,6 +2,8 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
 #include <iostream>
+#include <stdio.h>
+#include <vector>
 
 using namespace std;
 using namespace rs;
@@ -26,7 +28,12 @@ intrinsics 	_depth_align_intrin;
 intrinsics  	_color_align_intrin;
 bool 		_loop = true;
 
+//just need global varibles about rgb and aligned depth,maybe should be convert to 8 bit
+//cv::Mat rgb;
+//cv::Mat depth8u_align;
 
+//filename flag
+int filename_flag = 0;
 
 // Initialize the application state. Upon success will return the static app_state vars address
 bool initialize_streaming( )
@@ -83,6 +90,25 @@ void setup_windows( )
 }
 
 
+/*
+ * read keyboard input, if get 's', save the RGB image and aligned depth image.
+ */
+void ifSaveImage(cv::Mat rgb,cv::Mat depth)
+{
+  cv::Mat _rgb = rgb;
+  cv::Mat _depth = depth;
+  char c = cv::waitKey(33);
+  if(c=='s' || c=='S')
+  {
+    filename_flag++;
+    //cout << filename_flag << endl;
+    cv::imwrite("img/rgb_"+to_string(filename_flag)+".jpg", _rgb);
+
+    cv::imwrite("img/depth_"+to_string(filename_flag)+".jpg", _depth);
+
+  }
+}
+
 
 /////////////////////////////////////////////////////////////////////////////
 // Called every frame gets the data from streams and displays them using OpenCV.
@@ -134,7 +160,7 @@ bool display_next_frame( )
 	imshow( WINDOW_RGB, rgb );
 	cvWaitKey( 1 );
 	
-
+	ifSaveImage(rgb,depth8u_align);
 	
 
 	return true;
