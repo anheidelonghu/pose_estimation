@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 project(hxx_proj)
 
 #set debug
-set(CMAKE_BUILD_TYPE "Debug")
+#set(CMAKE_BUILD_TYPE "Debug")
 
 # Save the command line compile commands in the build output
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)

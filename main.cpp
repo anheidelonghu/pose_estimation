@@ -47,7 +47,7 @@ bool initialize_streaming( )
 		_rs_camera->enable_stream( rs::stream::depth, INPUT_WIDTH, INPUT_HEIGHT, rs::format::z16, FRAMERATE );
 		//_rs_camera->enable_stream( rs::stream::color_aligned_to_depth, INPUT_WIDTH, INPUT_HEIGHT, rs::format::rgb8, FRAMERATE );
 		//_rs_camera->enable_stream( rs::stream::depth_aligned_to_color, INPUT_WIDTH, INPUT_HEIGHT, rs::format::z16, FRAMERATE );
-		
+
 		_rs_camera->start( );
 
 		success = true;
@@ -101,11 +101,13 @@ void ifSaveImage(cv::Mat rgb,cv::Mat depth)
   if(c=='s' || c=='S')
   {
     filename_flag++;
-    //cout << filename_flag << endl;
+    cout << filename_flag << endl;
+    //"+to_string(filename_flag)+"
     cv::imwrite("img/rgb_"+to_string(filename_flag)+".jpg", _rgb);
-
+    cv::imwrite("test.jpg",_rgb);
+    cout << filename_flag << 1  << endl;
     cv::imwrite("img/depth_"+to_string(filename_flag)+".jpg", _depth);
-
+    cout << filename_flag << 2 << endl;
   }
 }
 
