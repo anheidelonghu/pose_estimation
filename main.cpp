@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
+#include <deque>
 #include "pose_estimation.h"
 
 using namespace std;
@@ -29,11 +30,13 @@ intrinsics 	_depth_align_intrin;
 intrinsics  	_color_align_intrin;
 bool 		_loop = true;
 
-//just need global varibles about rgb and aligned depth,maybe should be convert to 8 bit
-//cv::Mat rgb;
-//cv::Mat depth8u_align;
+//just need global varibles about rgb and aligned depth16
+cv::Mat rgb_stream;
+cv::Mat depth_stream;
+//0:rgb1; 1:depth1; 2:rgb2; 3:depth2
+deque <cv::Mat> twoFrames;
 
-//filename flag
+//filename flag,used for debug
 int filename_flag = 0;
 
 // Initialize the application state. Upon success will return the static app_state vars address
@@ -102,18 +105,18 @@ void ifSaveImage(cv::Mat rgb,cv::Mat depth)
   if(c=='s' || c=='S')
   {
     filename_flag++;
-    cout << filename_flag << endl;
+//     cout << filename_flag << endl;
     //"+to_string(filename_flag)+"
     cv::imwrite("img/rgb_"+to_string(filename_flag)+".png", _rgb);
-    cout << filename_flag << 1  << endl;
+//     cout << filename_flag << 1  << endl;
     cv::imwrite("img/depth_"+to_string(filename_flag)+".png", _depth);
-    cout << filename_flag << 2 << endl;
+//     cout << filename_flag << 2 << endl;
   }
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Called every frame gets the data from streams and displays them using OpenCV.
+// Called every frame gets the data from streams and displays them using OpenCV.(add save image function)
 /////////////////////////////////////////////////////////////////////////////
 bool display_next_frame( )
 {
@@ -142,7 +145,9 @@ bool display_next_frame( )
 			  _color_align_intrin.width,
 			  CV_8UC3,
 			  (uchar *)_rs_camera->get_frame_data( rs::stream::color_aligned_to_depth ) );
-
+	
+	rgb_stream = rgb.clone();
+	depth_stream = depth16_a.clone();
 	// < 800
 	cv::Mat depth8u = depth16;
 	depth8u.convertTo( depth8u, CV_8UC1, 255.0/1000 );
@@ -162,6 +167,8 @@ bool display_next_frame( )
 	imshow( WINDOW_RGB, rgb );
 	cvWaitKey( 1 );
 	
+	cout <<"color: "<< _color_intrin.ppx <<" "<< _color_intrin.ppy <<" "<< _color_intrin.fx << " "<<_color_intrin.fy << endl;
+	cout << "depth: "<<_depth_align_intrin.ppx <<" "<< _depth_align_intrin.ppy <<" "<< _depth_align_intrin.fx << " "<<_depth_align_intrin.fy << endl;
 	//ifSaveImage(rgb,depth8u_align);
 	ifSaveImage(rgb,depth16_a);
 
@@ -193,6 +200,7 @@ int main( ) try
 			_rs_camera->wait_for_frames( );
 
 		display_next_frame( );
+		//getPose();
 	}
 
 	_rs_camera->stop( );

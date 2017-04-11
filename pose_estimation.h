@@ -41,7 +41,11 @@ void bundleAdjustment(
 
 
 //change main to function
-//void calPose()
+void getPose()
+{
+  
+  
+}
 
 
 

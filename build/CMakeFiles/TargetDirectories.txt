@@ -3,6 +3,6 @@
 /home/hxx/code/hxx_proj/build/CMakeFiles/edit_cache.dir
 /home/hxx/code/hxx_proj/build/CMakeFiles/rebuild_cache.dir
 /home/hxx/code/hxx_proj/build/CMakeFiles/getPic.dir
-/home/hxx/code/hxx_proj/build/CMakeFiles/test.dir
+/home/hxx/code/hxx_proj/build/CMakeFiles/main.dir
 /home/hxx/code/hxx_proj/build/CMakeFiles/install/strip.dir
 /home/hxx/code/hxx_proj/build/CMakeFiles/install/local.dir

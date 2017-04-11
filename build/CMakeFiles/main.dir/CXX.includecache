@@ -19,9 +19,7 @@ stdio.h
 -
 vector
 -
-
-/home/hxx/code/hxx_proj/pose_estimation.cpp
-iostream
+deque
 -
 pose_estimation.h
 /home/hxx/code/hxx_proj/pose_estimation.h

@@ -168,17 +168,17 @@ getPic/fast:
 .PHONY : getPic/fast
 
 #=============================================================================
-# Target rules for targets named test
+# Target rules for targets named main
 
 # Build rule for target.
-test: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test
-.PHONY : test
+main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 main
+.PHONY : main
 
 # fast build rule for target.
-test/fast:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
-.PHONY : test/fast
+main/fast:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
+.PHONY : main/fast
 
 getPic.o: getPic.cpp.o
 
@@ -207,32 +207,32 @@ getPic.cpp.s:
 	$(MAKE) -f CMakeFiles/getPic.dir/build.make CMakeFiles/getPic.dir/getPic.cpp.s
 .PHONY : getPic.cpp.s
 
-pose_estimation.o: pose_estimation.cpp.o
+main.o: main.cpp.o
 
-.PHONY : pose_estimation.o
+.PHONY : main.o
 
 # target to build an object file
-pose_estimation.cpp.o:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/pose_estimation.cpp.o
-.PHONY : pose_estimation.cpp.o
+main.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.o
+.PHONY : main.cpp.o
 
-pose_estimation.i: pose_estimation.cpp.i
+main.i: main.cpp.i
 
-.PHONY : pose_estimation.i
+.PHONY : main.i
 
 # target to preprocess a source file
-pose_estimation.cpp.i:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/pose_estimation.cpp.i
-.PHONY : pose_estimation.cpp.i
+main.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.i
+.PHONY : main.cpp.i
 
-pose_estimation.s: pose_estimation.cpp.s
+main.s: main.cpp.s
 
-.PHONY : pose_estimation.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-pose_estimation.cpp.s:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/pose_estimation.cpp.s
-.PHONY : pose_estimation.cpp.s
+main.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
+.PHONY : main.cpp.s
 
 # Help Target
 help:
@@ -245,15 +245,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... getPic"
-	@echo "... test"
+	@echo "... main"
 	@echo "... install/strip"
 	@echo "... install/local"
 	@echo "... getPic.o"
 	@echo "... getPic.i"
 	@echo "... getPic.s"
-	@echo "... pose_estimation.o"
-	@echo "... pose_estimation.i"
-	@echo "... pose_estimation.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 .PHONY : help
 
 
