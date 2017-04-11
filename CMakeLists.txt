@@ -9,6 +9,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 # View the makefile commands during build
 #set(CMAKE_VERBOSE_MAKEFILE on)
 
+#need cxx11 feature
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
@@ -19,14 +20,17 @@ elseif(COMPILER_SUPPORTS_CXX0X)
 else()
     message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
-
+#find opengl,need not
 find_package(OpenGL REQUIRED)
 set(DEPENDENCIES realsense ${OPENGL_LIBRARIES})
 
 #find opencv 3.2 package,version unsure
 find_package(OpenCV 3.2 REQUIRED)
 #find_package(OpenCV REQUIRED)
-#list(APPEND DEPENDENCIES ${OPENCV_LIBS})
+# 添加cmake模块以使用g2o
+list( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules )
+find_package( G2O REQUIRED )
+find_package( CSparse REQUIRED )
 
 if(WIN32)
     add_subdirectory(third_party/glfw)
@@ -55,17 +59,31 @@ else()
     list(APPEND DEPENDENCIES m ${GLFW_LIBRARIES} ${LIBUSB1_LIBRARIES})
     include_directories(${GLFW_INCLUDE_DIR} 
 			${OpenCV_INCLUDE_DIRS}
+			${G2O_INCLUDE_DIRS}
+			${CSPARSE_INCLUDE_DIR}
+			"/usr/local/include/eigen3/"
 			)
 endif()
 
 add_executable(getPic getPic.cpp)
 target_link_libraries(getPic ${DEPENDENCIES})
 
-add_executable(main main.cpp)
-target_link_libraries(main ${DEPENDENCIES} ${OpenCV_LIBS})
+add_executable(main main.cpp pose_estimation.cpp)
+target_link_libraries(main 
+		      ${DEPENDENCIES} 
+		      ${OpenCV_LIBS}
+		      g2o_core g2o_stuff g2o_types_sba g2o_csparse_extension
+		      ${CSPARSE_LIBRARY}
+		      )
 
+# add_executable(test pose_estimation.cpp)
+# target_link_libraries( test 
+#    ${OpenCV_LIBS}
+#    g2o_core g2o_stuff g2o_types_sba g2o_csparse_extension 
+#    ${CSPARSE_LIBRARY}
+# )
 
 install(TARGETS 
 	getPic
-	main
+	test
 	RUNTIME DESTINATION bin)
