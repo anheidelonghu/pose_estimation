@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
+#include "pose_estimation.h"
 
 using namespace std;
 using namespace rs;

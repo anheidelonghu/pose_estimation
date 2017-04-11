@@ -68,20 +68,20 @@ endif()
 add_executable(getPic getPic.cpp)
 target_link_libraries(getPic ${DEPENDENCIES})
 
-add_executable(main main.cpp pose_estimation.cpp)
-target_link_libraries(main 
-		      ${DEPENDENCIES} 
-		      ${OpenCV_LIBS}
-		      g2o_core g2o_stuff g2o_types_sba g2o_csparse_extension
-		      ${CSPARSE_LIBRARY}
-		      )
+# add_executable(main main.cpp pose_estimation.cpp)
+# target_link_libraries(main 
+# 		      ${DEPENDENCIES} 
+# 		      ${OpenCV_LIBS}
+# 		      g2o_core g2o_stuff g2o_types_sba g2o_csparse_extension
+# 		      ${CSPARSE_LIBRARY}
+# 		      )
 
-# add_executable(test pose_estimation.cpp)
-# target_link_libraries( test 
-#    ${OpenCV_LIBS}
-#    g2o_core g2o_stuff g2o_types_sba g2o_csparse_extension 
-#    ${CSPARSE_LIBRARY}
-# )
+add_executable(test pose_estimation.cpp)
+target_link_libraries( test 
+   ${OpenCV_LIBS}
+   g2o_core g2o_stuff g2o_types_sba g2o_csparse_extension 
+   ${CSPARSE_LIBRARY}
+)
 
 install(TARGETS 
 	getPic

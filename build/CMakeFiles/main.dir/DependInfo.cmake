@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/hxx/code/hxx_proj/main.cpp" "/home/hxx/code/hxx_proj/build/CMakeFiles/main.dir/main.cpp.o"
+  "/home/hxx/code/hxx_proj/pose_estimation.cpp" "/home/hxx/code/hxx_proj/build/CMakeFiles/main.dir/pose_estimation.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -12,6 +13,8 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/local/include"
   "/usr/local/include/opencv"
+  "/usr/include/suitesparse"
+  "/usr/local/include/eigen3"
   )
 
 # Targets to which this target links.

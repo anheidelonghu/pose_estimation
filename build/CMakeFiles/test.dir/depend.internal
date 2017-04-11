@@ -3,6 +3,7 @@
 
 CMakeFiles/test.dir/pose_estimation.cpp.o
  /home/hxx/code/hxx_proj/pose_estimation.cpp
+ /home/hxx/code/hxx_proj/pose_estimation.h
  /usr/local/include/eigen3/Eigen/Cholesky
  /usr/local/include/eigen3/Eigen/Core
  /usr/local/include/eigen3/Eigen/Dense
