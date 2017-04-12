@@ -21,8 +21,9 @@ else()
     message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 #find opengl,need not
-find_package(OpenGL REQUIRED)
-set(DEPENDENCIES realsense ${OPENGL_LIBRARIES})
+#find_package(OpenGL REQUIRED)
+# ${OPENGL_LIBRARIES}
+set(DEPENDENCIES realsense)
 
 #find opencv 3.2 package,version unsure
 find_package(OpenCV 3.2 REQUIRED)
@@ -32,43 +33,52 @@ list( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules )
 find_package( G2O REQUIRED )
 find_package( CSparse REQUIRED )
 
-if(WIN32)
-    add_subdirectory(third_party/glfw)
-    list(APPEND DEPENDENCIES glfw3)
-else()
-    # Find glfw header
-    find_path(GLFW_INCLUDE_DIR NAMES GLFW/glfw3.h
-        PATHS /usr/X11R6/include
-              /usr/include/X11
-              /opt/graphics/OpenGL/include
-              /opt/graphics/OpenGL/contrib/libglfw
-              /usr/local/include
-              /usr/include/GL
-              /usr/include
-    )
-    # Find glfw library
-    find_library(GLFW_LIBRARIES NAMES glfw glfw3
-            PATHS /usr/lib64
-                  /usr/lib
-                  /usr/lib/${CMAKE_LIBRARY_ARCHITECTURE}
-                  /usr/local/lib64
-                  /usr/local/lib
-                  /usr/local/lib/${CMAKE_LIBRARY_ARCHITECTURE}
-                  /usr/X11R6/lib
-    )
-    list(APPEND DEPENDENCIES m ${GLFW_LIBRARIES} ${LIBUSB1_LIBRARIES})
-    include_directories(${GLFW_INCLUDE_DIR} 
-			${OpenCV_INCLUDE_DIRS}
-			${G2O_INCLUDE_DIRS}
-			${CSPARSE_INCLUDE_DIR}
-			"/usr/local/include/eigen3/"
-			)
-endif()
+# if(WIN32)
+#     add_subdirectory(third_party/glfw)
+#     list(APPEND DEPENDENCIES glfw3)
+# else()
+#     # Find glfw header
+#     find_path(GLFW_INCLUDE_DIR NAMES GLFW/glfw3.h
+#         PATHS /usr/X11R6/include
+#               /usr/include/X11
+#               /opt/graphics/OpenGL/include
+#               /opt/graphics/OpenGL/contrib/libglfw
+#               /usr/local/include
+#               /usr/include/GL
+#               /usr/include
+#     )
+#     # Find glfw library
+#     find_library(GLFW_LIBRARIES NAMES glfw glfw3
+#             PATHS /usr/lib64
+#                   /usr/lib
+#                   /usr/lib/${CMAKE_LIBRARY_ARCHITECTURE}
+#                   /usr/local/lib64
+#                   /usr/local/lib
+#                   /usr/local/lib/${CMAKE_LIBRARY_ARCHITECTURE}
+#                   /usr/X11R6/lib
+#     )
+#     list(APPEND DEPENDENCIES m ${GLFW_LIBRARIES} ${LIBUSB1_LIBRARIES})
+#     include_directories(${GLFW_INCLUDE_DIR} 
+# 			${OpenCV_INCLUDE_DIRS}
+# 			${G2O_INCLUDE_DIRS}
+# 			${CSPARSE_INCLUDE_DIR}
+# 			"/usr/local/include/eigen3/"
+# 			)
+# endif()
 
-add_executable(getPic getPic.cpp)
-target_link_libraries(getPic ${DEPENDENCIES})
+#m ${GLFW_LIBRARIES} 
+list(APPEND DEPENDENCIES ${LIBUSB1_LIBRARIES})
+#${GLFW_INCLUDE_DIR}
+include_directories( 
+		    ${OpenCV_INCLUDE_DIRS}
+		    ${G2O_INCLUDE_DIRS}
+		    ${CSPARSE_INCLUDE_DIR}
+		    "/usr/local/include/eigen3/"
+		    )
+# add_executable(getPic getPic.cpp)
+# target_link_libraries(getPic ${DEPENDENCIES})
 
-add_executable(main main.cpp )
+add_executable(main main.cpp pose_estimation.cpp)
 target_link_libraries(main 
 		      ${DEPENDENCIES} 
 		      ${OpenCV_LIBS}
@@ -84,6 +94,5 @@ target_link_libraries(main
 # )
 
 install(TARGETS 
-	getPic
 	main
 	RUNTIME DESTINATION bin)

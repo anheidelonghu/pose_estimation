@@ -24,6 +24,12 @@ deque
 pose_estimation.h
 /home/hxx/code/hxx_proj/pose_estimation.h
 
+/home/hxx/code/hxx_proj/pose_estimation.cpp
+iostream
+-
+pose_estimation.h
+/home/hxx/code/hxx_proj/pose_estimation.h
+
 /home/hxx/code/hxx_proj/pose_estimation.h
 opencv2/core/core.hpp
 -
@@ -34,8 +40,6 @@ opencv2/highgui/highgui.hpp
 opencv2/calib3d/calib3d.hpp
 -
 Eigen/Eigen
--
-Eigen/src/Core/CwiseNullaryOp.h
 -
 g2o/core/base_vertex.h
 -

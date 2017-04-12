@@ -33,6 +33,10 @@ bool 		_loop = true;
 //just need global varibles about rgb and aligned depth16
 cv::Mat rgb_stream;
 cv::Mat depth_stream;
+//R and t
+cv::Mat R;
+cv::Mat t;
+
 //0:rgb1; 1:depth1; 2:rgb2; 3:depth2
 deque <cv::Mat> twoFrames;
 
@@ -167,8 +171,8 @@ bool display_next_frame( )
 	imshow( WINDOW_RGB, rgb );
 	cvWaitKey( 1 );
 	
-	cout <<"color: "<< _color_intrin.ppx <<" "<< _color_intrin.ppy <<" "<< _color_intrin.fx << " "<<_color_intrin.fy << endl;
-	cout << "depth: "<<_depth_align_intrin.ppx <<" "<< _depth_align_intrin.ppy <<" "<< _depth_align_intrin.fx << " "<<_depth_align_intrin.fy << endl;
+// 	cout <<"color: "<< _color_intrin.ppx <<" "<< _color_intrin.ppy <<" "<< _color_intrin.fx << " "<<_color_intrin.fy << endl;
+// 	cout << "depth: "<<_depth_align_intrin.ppx <<" "<< _depth_align_intrin.ppy <<" "<< _depth_align_intrin.fx << " "<<_depth_align_intrin.fy << endl;
 	//ifSaveImage(rgb,depth8u_align);
 	ifSaveImage(rgb,depth16_a);
 
@@ -200,7 +204,8 @@ int main( ) try
 			_rs_camera->wait_for_frames( );
 
 		display_next_frame( );
-		//getPose();
+		getMotion(rgb_stream, depth_stream, twoFrames, R, t);
+		//cout << rgb_stream.depth() << " & " << depth_stream.depth() << endl;
 	}
 
 	_rs_camera->stop( );

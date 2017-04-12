@@ -6,7 +6,6 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/calib3d/calib3d.hpp>
 #include <Eigen/Eigen>
-#include <Eigen/src/Core/CwiseNullaryOp.h>
 #include <g2o/core/base_vertex.h>
 #include <g2o/core/base_unary_edge.h>
 #include <g2o/core/block_solver.h>
@@ -41,11 +40,11 @@ void bundleAdjustment(
 
 
 //change main to function
-void getPose()
-{
-  
-  
-}
+int getMotion(
+    cv::Mat& rgb_stream, cv::Mat& depth_stream,
+    deque <cv::Mat>& twoFrames,
+    cv::Mat& R, cv::Mat& t
+);
 
 
 

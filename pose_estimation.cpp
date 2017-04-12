@@ -1,28 +1,35 @@
 #include <iostream>
 #include "pose_estimation.h"
 
-int main ( int argc, char** argv )
+
+//calculate R and t between to frames
+int getMotion(cv::Mat& rgb_stream, cv::Mat& depth_stream, deque <cv::Mat>& twoFrames, cv::Mat& R, cv::Mat& t)
 {
-    if ( argc != 5 )
-    {
-        cout<<"usage: pose_estimation_3d3d img1 img2 depth1 depth2"<<endl;
-        return 1;
-    }
-    //-- 读取图像
-    Mat img_1 = imread ( argv[1], CV_LOAD_IMAGE_COLOR );
-    Mat img_2 = imread ( argv[2], CV_LOAD_IMAGE_COLOR );
-
-    vector<KeyPoint> keypoints_1, keypoints_2;
-    vector<DMatch> matches;
-    find_feature_matches ( img_1, img_2, keypoints_1, keypoints_2, matches );
+  //get picture stream
+  cv::Mat _rgb_stream = rgb_stream.clone();
+  cv::Mat _depth_stream = depth_stream.clone();
+  cout << rgb_stream.depth() << " & " << depth_stream.depth() << endl;
+  if(_rgb_stream.empty() || _depth_stream.empty())
+  {
+    cout << "rgb stream or depth stream is empty!" << endl;
+    return 1;
+  }                                                     
+  
+  //if deque is full, begin to calculate pose,
+  if(twoFrames.size() ==2)
+  {
+    cv::Mat img_1 = twoFrames.at(0);	//last image
+    cv::Mat img_2 = _rgb_stream;	//image now
+    cv::Mat depth1 = twoFrames.at(1);
+    cv::Mat depth2 = _depth_stream;
+    vector <KeyPoint> keypoints_1, keypoints_2;
+    vector <DMatch> matches;
+    find_feature_matches( img_1, img_2, keypoints_1, keypoints_2, matches);
     cout<<"一共找到了"<<matches.size() <<"组匹配点"<<endl;
-
-    // 建立3D点
-    Mat depth1 = imread ( argv[3], CV_LOAD_IMAGE_UNCHANGED );       // 深度图为16位无符号数，单通道图像
-    Mat depth2 = imread ( argv[4], CV_LOAD_IMAGE_UNCHANGED );       // 深度图为16位无符号数，单通道图像
-    Mat K = ( Mat_<double> ( 3,3 ) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1 );		//intrinsic matrix
+    
+    Mat K = ( Mat_<double> ( 3,3 ) << 309.414, 0, 167.38, 0, 312.495, 117.689, 0, 0, 1 );		//intrinsic matrix
     vector<Point3f> pts1, pts2;
-
+    
     for ( DMatch m:matches )
     {
         ushort d1 = depth1.ptr<unsigned short> ( int ( keypoints_1[m.queryIdx].pt.y ) ) [ int ( keypoints_1[m.queryIdx].pt.x ) ];
@@ -36,7 +43,8 @@ int main ( int argc, char** argv )
         pts1.push_back ( Point3f ( p1.x*dd1, p1.y*dd1, dd1 ) );
         pts2.push_back ( Point3f ( p2.x*dd2, p2.y*dd2, dd2 ) );
     }
-
+    
+    
     cout<<"3d-3d pairs: "<<pts1.size() <<endl;
     Mat R, t;
     pose_estimation_3d3d ( pts1, pts2, R, t );
@@ -60,7 +68,29 @@ int main ( int argc, char** argv )
             <<endl;
         cout<<endl;
     }
+    
+  }
+  
+  
+    //push to Mat deque
+  if(twoFrames.size() == 2)
+  {
+    twoFrames.pop_front();
+    twoFrames.push_back(_rgb_stream);
+    twoFrames.pop_front();
+    twoFrames.push_back(_depth_stream);
+  }
+  else if(twoFrames.size() == 0)
+  {
+    twoFrames.push_back(_rgb_stream);
+    twoFrames.push_back(_depth_stream);
+  }
+  else{
+    cout << "deque size is incorrect!" << endl;
+  }
+  
 }
+
 
 void find_feature_matches ( const Mat& img_1, const Mat& img_2,
                             std::vector<KeyPoint>& keypoints_1,

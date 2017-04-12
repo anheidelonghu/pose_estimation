@@ -1,0 +1,5 @@
+rs intrinsics:
+ppx:167.38 
+ppy:117.689 
+fx:309.414 
+fy:312.495

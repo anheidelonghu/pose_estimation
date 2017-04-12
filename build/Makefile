@@ -78,17 +78,6 @@ list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -99,6 +88,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # Special rule for the target install/strip
 install/strip: preinstall
@@ -155,19 +155,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named getPic
-
-# Build rule for target.
-getPic: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 getPic
-.PHONY : getPic
-
-# fast build rule for target.
-getPic/fast:
-	$(MAKE) -f CMakeFiles/getPic.dir/build.make CMakeFiles/getPic.dir/build
-.PHONY : getPic/fast
-
-#=============================================================================
 # Target rules for targets named main
 
 # Build rule for target.
@@ -179,33 +166,6 @@ main: cmake_check_build_system
 main/fast:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
-
-getPic.o: getPic.cpp.o
-
-.PHONY : getPic.o
-
-# target to build an object file
-getPic.cpp.o:
-	$(MAKE) -f CMakeFiles/getPic.dir/build.make CMakeFiles/getPic.dir/getPic.cpp.o
-.PHONY : getPic.cpp.o
-
-getPic.i: getPic.cpp.i
-
-.PHONY : getPic.i
-
-# target to preprocess a source file
-getPic.cpp.i:
-	$(MAKE) -f CMakeFiles/getPic.dir/build.make CMakeFiles/getPic.dir/getPic.cpp.i
-.PHONY : getPic.cpp.i
-
-getPic.s: getPic.cpp.s
-
-.PHONY : getPic.s
-
-# target to generate assembly for a file
-getPic.cpp.s:
-	$(MAKE) -f CMakeFiles/getPic.dir/build.make CMakeFiles/getPic.dir/getPic.cpp.s
-.PHONY : getPic.cpp.s
 
 main.o: main.cpp.o
 
@@ -234,6 +194,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+pose_estimation.o: pose_estimation.cpp.o
+
+.PHONY : pose_estimation.o
+
+# target to build an object file
+pose_estimation.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/pose_estimation.cpp.o
+.PHONY : pose_estimation.cpp.o
+
+pose_estimation.i: pose_estimation.cpp.i
+
+.PHONY : pose_estimation.i
+
+# target to preprocess a source file
+pose_estimation.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/pose_estimation.cpp.i
+.PHONY : pose_estimation.cpp.i
+
+pose_estimation.s: pose_estimation.cpp.s
+
+.PHONY : pose_estimation.s
+
+# target to generate assembly for a file
+pose_estimation.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/pose_estimation.cpp.s
+.PHONY : pose_estimation.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -242,18 +229,17 @@ help:
 	@echo "... depend"
 	@echo "... install"
 	@echo "... list_install_components"
-	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... getPic"
 	@echo "... main"
+	@echo "... edit_cache"
 	@echo "... install/strip"
 	@echo "... install/local"
-	@echo "... getPic.o"
-	@echo "... getPic.i"
-	@echo "... getPic.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... pose_estimation.o"
+	@echo "... pose_estimation.i"
+	@echo "... pose_estimation.s"
 .PHONY : help
 
 
