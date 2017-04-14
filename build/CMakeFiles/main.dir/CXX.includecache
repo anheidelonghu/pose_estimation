@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/hxx/code/hxx_proj/main.cpp
+/home/hu/code/pose_estimation/main.cpp
 librealsense/rs.hpp
 -
 opencv2/opencv.hpp
@@ -22,15 +22,15 @@ vector
 deque
 -
 pose_estimation.h
-/home/hxx/code/hxx_proj/pose_estimation.h
+/home/hu/code/pose_estimation/pose_estimation.h
 
-/home/hxx/code/hxx_proj/pose_estimation.cpp
+/home/hu/code/pose_estimation/pose_estimation.cpp
 iostream
 -
 pose_estimation.h
-/home/hxx/code/hxx_proj/pose_estimation.h
+/home/hu/code/pose_estimation/pose_estimation.h
 
-/home/hxx/code/hxx_proj/pose_estimation.h
+/home/hu/code/pose_estimation/pose_estimation.h
 opencv2/core/core.hpp
 -
 opencv2/features2d/features2d.hpp

@@ -39,6 +39,10 @@ void bundleAdjustment(
 );
 
 
+//assemble rgb and depth image to deque
+static int img_assemble(cv::Mat& rgb, cv::Mat& depth, deque <cv::Mat>& twoFrames);
+
+
 //change main to function
 int getMotion(
     cv::Mat& rgb_stream, cv::Mat& depth_stream,

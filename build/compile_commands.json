@@ -1,12 +1,12 @@
 [
 {
-  "directory": "/home/hxx/code/hxx_proj/build",
-  "command": "/usr/bin/c++    -isystem /usr/local/include -isystem /usr/local/include/opencv -I/usr/include/suitesparse -I/usr/local/include/eigen3  -std=c++11 -std=c++11 -g   -o CMakeFiles/main.dir/main.cpp.o -c /home/hxx/code/hxx_proj/main.cpp",
-  "file": "/home/hxx/code/hxx_proj/main.cpp"
+  "directory": "/home/hu/code/pose_estimation/build",
+  "command": "/usr/bin/c++    -isystem /usr/local/include -isystem /usr/local/include/opencv -I/usr/include/suitesparse -I/usr/local/include/eigen3   -std=c++11 -g   -o CMakeFiles/main.dir/main.cpp.o -c /home/hu/code/pose_estimation/main.cpp",
+  "file": "/home/hu/code/pose_estimation/main.cpp"
 },
 {
-  "directory": "/home/hxx/code/hxx_proj/build",
-  "command": "/usr/bin/c++    -isystem /usr/local/include -isystem /usr/local/include/opencv -I/usr/include/suitesparse -I/usr/local/include/eigen3  -std=c++11 -std=c++11 -g   -o CMakeFiles/main.dir/pose_estimation.cpp.o -c /home/hxx/code/hxx_proj/pose_estimation.cpp",
-  "file": "/home/hxx/code/hxx_proj/pose_estimation.cpp"
+  "directory": "/home/hu/code/pose_estimation/build",
+  "command": "/usr/bin/c++    -isystem /usr/local/include -isystem /usr/local/include/opencv -I/usr/include/suitesparse -I/usr/local/include/eigen3   -std=c++11 -g   -o CMakeFiles/main.dir/pose_estimation.cpp.o -c /home/hu/code/pose_estimation/pose_estimation.cpp",
+  "file": "/home/hu/code/pose_estimation/pose_estimation.cpp"
 }
 ]

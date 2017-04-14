@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/hxx/code/hxx_proj
+CMAKE_SOURCE_DIR = /home/hu/code/pose_estimation
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/hxx/code/hxx_proj/build
+CMAKE_BINARY_DIR = /home/hu/code/pose_estimation/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/main.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/main.dir/flags.make
 
 CMakeFiles/main.dir/main.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hxx/code/hxx_proj/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main.dir/main.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/main.cpp.o -c /home/hxx/code/hxx_proj/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hu/code/pose_estimation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main.dir/main.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/main.cpp.o -c /home/hu/code/pose_estimation/main.cpp
 
 CMakeFiles/main.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/main.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hxx/code/hxx_proj/main.cpp > CMakeFiles/main.dir/main.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hu/code/pose_estimation/main.cpp > CMakeFiles/main.dir/main.cpp.i
 
 CMakeFiles/main.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/main.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hxx/code/hxx_proj/main.cpp -o CMakeFiles/main.dir/main.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hu/code/pose_estimation/main.cpp -o CMakeFiles/main.dir/main.cpp.s
 
 CMakeFiles/main.dir/main.cpp.o.requires:
 
@@ -83,16 +83,16 @@ CMakeFiles/main.dir/main.cpp.o.provides.build: CMakeFiles/main.dir/main.cpp.o
 
 CMakeFiles/main.dir/pose_estimation.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/pose_estimation.cpp.o: ../pose_estimation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hxx/code/hxx_proj/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/pose_estimation.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/pose_estimation.cpp.o -c /home/hxx/code/hxx_proj/pose_estimation.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hu/code/pose_estimation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/pose_estimation.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/pose_estimation.cpp.o -c /home/hu/code/pose_estimation/pose_estimation.cpp
 
 CMakeFiles/main.dir/pose_estimation.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/pose_estimation.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hxx/code/hxx_proj/pose_estimation.cpp > CMakeFiles/main.dir/pose_estimation.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hu/code/pose_estimation/pose_estimation.cpp > CMakeFiles/main.dir/pose_estimation.cpp.i
 
 CMakeFiles/main.dir/pose_estimation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/pose_estimation.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hxx/code/hxx_proj/pose_estimation.cpp -o CMakeFiles/main.dir/pose_estimation.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hu/code/pose_estimation/pose_estimation.cpp -o CMakeFiles/main.dir/pose_estimation.cpp.s
 
 CMakeFiles/main.dir/pose_estimation.cpp.o.requires:
 
@@ -134,7 +134,7 @@ main: /usr/local/lib/libopencv_imgcodecs.so.3.2.0
 main: /usr/local/lib/libopencv_imgproc.so.3.2.0
 main: /usr/local/lib/libopencv_core.so.3.2.0
 main: CMakeFiles/main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hxx/code/hxx_proj/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hu/code/pose_estimation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -152,6 +152,6 @@ CMakeFiles/main.dir/clean:
 .PHONY : CMakeFiles/main.dir/clean
 
 CMakeFiles/main.dir/depend:
-	cd /home/hxx/code/hxx_proj/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hxx/code/hxx_proj /home/hxx/code/hxx_proj /home/hxx/code/hxx_proj/build /home/hxx/code/hxx_proj/build /home/hxx/code/hxx_proj/build/CMakeFiles/main.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/hu/code/pose_estimation/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hu/code/pose_estimation /home/hu/code/pose_estimation /home/hu/code/pose_estimation/build /home/hu/code/pose_estimation/build /home/hu/code/pose_estimation/build/CMakeFiles/main.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/main.dir/depend
 

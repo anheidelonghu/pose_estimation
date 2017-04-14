@@ -1,1 +1,0 @@
-/usr/bin/c++   -std=c++11 -g   CMakeFiles/hxx_proj.dir/getPic.cpp.o CMakeFiles/hxx_proj.dir/main.cpp.o  -o hxx_proj -rdynamic 

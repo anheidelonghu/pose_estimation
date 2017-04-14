@@ -7,7 +7,7 @@ Current Build Directory Index=0
 ProjectRootRelative=./
 
 [CMake][CMake Build Directory 0]
-Build Directory Path=file:///home/hxx/code/hxx_proj/build
+Build Directory Path=file:///home/hu/code/pose_estimation/build
 Build Type=Debug
 CMake Binary=file:///usr/bin/cmake
 Environment Profile=
@@ -33,9 +33,12 @@ Arguments=
 Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x00)
 Dependency Action=Nothing
 EnvironmentGroup=
-Executable=file:///home/hxx/code/hxx_proj/
+Executable=file:///home/hu/code/pose_estimation/build/main
 External Terminal=konsole --noclose --workdir %workdir -e %exe
 Project Target=hxx_proj,main
 Use External Terminal=false
 Working Directory=
 isExecutable=true
+
+[Project]
+VersionControlSupport=kdevgit

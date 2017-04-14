@@ -2,6 +2,26 @@
 #include "pose_estimation.h"
 
 
+static int img_assemble(cv::Mat& rgb, cv::Mat& depth, deque <cv::Mat>& twoFrames)
+{
+  if(twoFrames.size() == 2)
+  {
+    twoFrames.pop_front();
+    twoFrames.push_back(rgb);
+    twoFrames.pop_front();
+    twoFrames.push_back(depth);
+  }
+  else if(twoFrames.size() == 0)
+  {
+    twoFrames.push_back(rgb);
+    twoFrames.push_back(depth);
+  }
+  else{
+    cout << "deque size is incorrect!" << endl;
+    return 4;
+  }
+}
+
 //calculate R and t between to frames
 int getMotion(cv::Mat& rgb_stream, cv::Mat& depth_stream, deque <cv::Mat>& twoFrames, cv::Mat& R, cv::Mat& t)
 {
@@ -12,11 +32,12 @@ int getMotion(cv::Mat& rgb_stream, cv::Mat& depth_stream, deque <cv::Mat>& twoFr
   if(_rgb_stream.empty() || _depth_stream.empty())
   {
     cout << "rgb stream or depth stream is empty!" << endl;
+    if(img_assemble(_rgb_stream, _depth_stream, twoFrames) == 4) return 4;
     return 1;
   }                                                     
   
   //if deque is full, begin to calculate pose,
-  if(twoFrames.size() ==2)
+  if(twoFrames.size() == 2)
   {
     cv::Mat img_1 = twoFrames.at(0);	//last image
     cv::Mat img_2 = _rgb_stream;	//image now
@@ -25,6 +46,17 @@ int getMotion(cv::Mat& rgb_stream, cv::Mat& depth_stream, deque <cv::Mat>& twoFr
     vector <KeyPoint> keypoints_1, keypoints_2;
     vector <DMatch> matches;
     find_feature_matches( img_1, img_2, keypoints_1, keypoints_2, matches);
+    if(matches.size() < 5)
+    {
+//       imwrite("errorbox/rgb1.jpg",img_1);
+//       imwrite("errorbox/rgb2.jpg",img_2);
+//       imwrite("errorbox/depth1.jpg",depth1);
+//       imwrite("errorbox/depth2.jpg",depth2);
+      
+      cout << "matches size: " << matches.size() << endl;
+      if(img_assemble(_rgb_stream, _depth_stream, twoFrames) == 4) return 4;
+      return 2;
+    }
     cout<<"一共找到了"<<matches.size() <<"组匹配点"<<endl;
     
     Mat K = ( Mat_<double> ( 3,3 ) << 309.414, 0, 167.38, 0, 312.495, 117.689, 0, 0, 1 );		//intrinsic matrix
@@ -44,6 +76,13 @@ int getMotion(cv::Mat& rgb_stream, cv::Mat& depth_stream, deque <cv::Mat>& twoFr
         pts2.push_back ( Point3f ( p2.x*dd2, p2.y*dd2, dd2 ) );
     }
     
+    if(pts1.size() < 5)
+    {
+      cout << "pts1 size: " << pts1.size() << endl;
+      if(img_assemble(_rgb_stream, _depth_stream, twoFrames) == 4) return 4;
+      return 3;
+    }
+    //cout << "pts size: " << pts1.size() << endl;
     
     cout<<"3d-3d pairs: "<<pts1.size() <<endl;
     Mat R, t;
@@ -72,23 +111,9 @@ int getMotion(cv::Mat& rgb_stream, cv::Mat& depth_stream, deque <cv::Mat>& twoFr
   }
   
   
-    //push to Mat deque
-  if(twoFrames.size() == 2)
-  {
-    twoFrames.pop_front();
-    twoFrames.push_back(_rgb_stream);
-    twoFrames.pop_front();
-    twoFrames.push_back(_depth_stream);
-  }
-  else if(twoFrames.size() == 0)
-  {
-    twoFrames.push_back(_rgb_stream);
-    twoFrames.push_back(_depth_stream);
-  }
-  else{
-    cout << "deque size is incorrect!" << endl;
-  }
-  
+  //push to Mat deque
+  if(img_assemble(_rgb_stream, _depth_stream, twoFrames) == 4) return 4;
+
 }
 
 
