@@ -25,10 +25,10 @@ pose_estimation.h
 /home/hu/code/pose_estimation/pose_estimation.h
 
 /home/hu/code/pose_estimation/pose_estimation.cpp
-iostream
--
 pose_estimation.h
 /home/hu/code/pose_estimation/pose_estimation.h
+test.h
+/home/hu/code/pose_estimation/test.h
 
 /home/hu/code/pose_estimation/pose_estimation.h
 opencv2/core/core.hpp
@@ -54,6 +54,34 @@ g2o/solvers/eigen/linear_solver_eigen.h
 g2o/types/sba/types_six_dof_expmap.h
 -
 chrono
+-
+iostream
+-
+
+/home/hu/code/pose_estimation/test.cpp
+test.h
+/home/hu/code/pose_estimation/test.h
+
+/home/hu/code/pose_estimation/test.h
+opencv2/core/core.hpp
+-
+opencv2/features2d/features2d.hpp
+-
+opencv2/highgui/highgui.hpp
+-
+opencv2/calib3d/calib3d.hpp
+-
+opencv2/imgcodecs.hpp
+-
+opencv2/xfeatures2d.hpp
+-
+iostream
+-
+vector
+-
+stdio.h
+-
+Eigen/Eigen
 -
 
 /usr/local/include/eigen3/Eigen/Cholesky
@@ -3257,4 +3285,18 @@ opencv2/videostab/global_motion.hpp
 /usr/local/include/opencv2/videostab/opencv2/videostab/global_motion.hpp
 opencv2/videostab/log.hpp
 /usr/local/include/opencv2/videostab/opencv2/videostab/log.hpp
+
+/usr/local/include/opencv2/xfeatures2d.hpp
+opencv2/features2d.hpp
+/usr/local/include/opencv2/opencv2/features2d.hpp
+opencv2/xfeatures2d/nonfree.hpp
+/usr/local/include/opencv2/opencv2/xfeatures2d/nonfree.hpp
+
+/usr/local/include/opencv2/xfeatures2d/cuda.hpp
+opencv2/core/cuda.hpp
+/usr/local/include/opencv2/xfeatures2d/opencv2/core/cuda.hpp
+
+/usr/local/include/opencv2/xfeatures2d/nonfree.hpp
+opencv2/features2d.hpp
+/usr/local/include/opencv2/xfeatures2d/opencv2/features2d.hpp
 

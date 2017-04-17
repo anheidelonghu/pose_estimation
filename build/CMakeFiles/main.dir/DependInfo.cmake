@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/hu/code/pose_estimation/main.cpp" "/home/hu/code/pose_estimation/build/CMakeFiles/main.dir/main.cpp.o"
   "/home/hu/code/pose_estimation/pose_estimation.cpp" "/home/hu/code/pose_estimation/build/CMakeFiles/main.dir/pose_estimation.cpp.o"
+  "/home/hu/code/pose_estimation/test.cpp" "/home/hu/code/pose_estimation/build/CMakeFiles/main.dir/test.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

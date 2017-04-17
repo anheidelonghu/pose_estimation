@@ -1,5 +1,5 @@
-#include <iostream>
 #include "pose_estimation.h"
+#include "test.h"
 
 
 static void showMatchImage(cv::Mat& img_1, cv::Mat& img_2, vector<KeyPoint>& keyPoint_1, vector<KeyPoint>& keyPoint_2, vector<DMatch>& matches)
@@ -8,7 +8,7 @@ static void showMatchImage(cv::Mat& img_1, cv::Mat& img_2, vector<KeyPoint>& key
   drawMatches(img_1,keyPoint_1,img_2,keyPoint_2,matches,showImg);
   namedWindow("show match",0);
   imshow("show match",showImg);
-  waitKey(1);
+  waitKey(0);
 }
 
 static int img_assemble(cv::Mat& rgb, cv::Mat& depth, deque <cv::Mat>& twoFrames)
@@ -32,7 +32,11 @@ static int img_assemble(cv::Mat& rgb, cv::Mat& depth, deque <cv::Mat>& twoFrames
 }
 
 //calculate R and t between to frames
-int getMotion(cv::Mat& rgb_stream, cv::Mat& depth_stream, deque <cv::Mat>& twoFrames, cv::Mat& R, cv::Mat& t, bool showMatch)
+int getMotion(cv::Mat& rgb_stream, cv::Mat& depth_stream, 
+	      deque <cv::Mat>& twoFrames, 
+	      cv::Mat& R, cv::Mat& t, 
+	      bool showMatch, 
+	      featureType type)
 {
   //get picture stream
   cv::Mat _rgb_stream = rgb_stream.clone();
@@ -54,7 +58,20 @@ int getMotion(cv::Mat& rgb_stream, cv::Mat& depth_stream, deque <cv::Mat>& twoFr
     cv::Mat depth2 = _depth_stream;
     vector <KeyPoint> keypoints_1, keypoints_2;
     vector <DMatch> matches;
-    find_feature_matches( img_1, img_2, keypoints_1, keypoints_2, matches);
+    switch(type)
+    {
+      case ORBType:
+      {
+	find_feature_matches( img_1, img_2, keypoints_1, keypoints_2, matches);
+	break;
+      }
+      case SURFType:
+      {
+	find_feature_matches_surf( img_1, img_2, keypoints_1, keypoints_2, matches);
+	break;
+      }
+    }
+    
     if(matches.size() < 5)
     {
 //       imwrite("errorbox/rgb1.jpg",img_1);
@@ -133,6 +150,8 @@ void find_feature_matches ( const Mat& img_1, const Mat& img_2,
                             std::vector<KeyPoint>& keypoints_2,
                             std::vector< DMatch >& matches )
 {
+    //-- frequency
+    int64 time0 = getTickCount();
     //-- 初始化
     Mat descriptors_1, descriptors_2;
     // used in OpenCV3 
@@ -177,6 +196,9 @@ void find_feature_matches ( const Mat& img_1, const Mat& img_2,
             matches.push_back ( match[i] );
         }
     }
+    
+    //output frequency
+    cout << "当前帧率为： " << getTickFrequency() / (getTickCount() - time0) << endl;
 }
 
 Point2d pixel2cam ( const Point2d& p, const Mat& K )

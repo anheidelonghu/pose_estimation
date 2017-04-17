@@ -13,9 +13,16 @@
 #include <g2o/solvers/eigen/linear_solver_eigen.h>
 #include <g2o/types/sba/types_six_dof_expmap.h>
 #include <chrono>
+#include <iostream>
 
 using namespace cv;
 using namespace std;
+
+enum featureType{
+  ORBType,
+  SURFType
+};
+
 void find_feature_matches (
     const Mat& img_1, const Mat& img_2,
     std::vector<KeyPoint>& keypoints_1,
@@ -52,7 +59,8 @@ int getMotion(
     cv::Mat& rgb_stream, cv::Mat& depth_stream,
     deque <cv::Mat>& twoFrames,
     cv::Mat& R, cv::Mat& t,
-    bool showMatch
+    bool showMatch = false,
+    featureType type = ORBType
 );
 
 

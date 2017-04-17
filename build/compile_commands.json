@@ -8,5 +8,10 @@
   "directory": "/home/hu/code/pose_estimation/build",
   "command": "/usr/bin/c++    -isystem /usr/local/include -isystem /usr/local/include/opencv -I/usr/include/suitesparse -I/usr/local/include/eigen3   -std=c++11 -g   -o CMakeFiles/main.dir/pose_estimation.cpp.o -c /home/hu/code/pose_estimation/pose_estimation.cpp",
   "file": "/home/hu/code/pose_estimation/pose_estimation.cpp"
+},
+{
+  "directory": "/home/hu/code/pose_estimation/build",
+  "command": "/usr/bin/c++    -isystem /usr/local/include -isystem /usr/local/include/opencv -I/usr/include/suitesparse -I/usr/local/include/eigen3   -std=c++11 -g   -o CMakeFiles/main.dir/test.cpp.o -c /home/hu/code/pose_estimation/test.cpp",
+  "file": "/home/hu/code/pose_estimation/test.cpp"
 }
 ]

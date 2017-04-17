@@ -78,7 +78,7 @@ include_directories(
 # add_executable(getPic getPic.cpp)
 # target_link_libraries(getPic ${DEPENDENCIES})
 
-add_executable(main main.cpp pose_estimation.cpp)
+add_executable(main main.cpp pose_estimation.cpp test.cpp)
 target_link_libraries(main 
 		      ${DEPENDENCIES} 
 		      ${OpenCV_LIBS}
