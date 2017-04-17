@@ -3,6 +3,7 @@
 #include <opencv2/highgui.hpp>
 #include <iostream>
 #include <stdio.h>
+#include <stdlib.h>
 #include <vector>
 #include <deque>
 #include "pose_estimation.h"
@@ -184,8 +185,13 @@ bool display_next_frame( )
 /////////////////////////////////////////////////////////////////////////////
 // Main function
 /////////////////////////////////////////////////////////////////////////////
-int main( ) try
+int main(int argc, char** argv ) try
 {
+	int type = 0;
+	if(argc == 2)
+	{
+	  type = atoi(argv[1]);
+	}
 	rs::log_to_console( rs::log_severity::warn );
 
 	if( !initialize_streaming( ) )
@@ -204,7 +210,7 @@ int main( ) try
 			_rs_camera->wait_for_frames( );
 
 		display_next_frame( );
-		getMotion(rgb_stream, depth_stream, twoFrames, R, t, true);
+		getMotion(rgb_stream, depth_stream, twoFrames, R, t, true, featureType(type));
 		//cout << rgb_stream.depth() << " & " << depth_stream.depth() << endl;
 	}
 
