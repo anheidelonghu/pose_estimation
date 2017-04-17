@@ -2,6 +2,15 @@
 #include "pose_estimation.h"
 
 
+static void showMatchImage(cv::Mat& img_1, cv::Mat& img_2, vector<KeyPoint>& keyPoint_1, vector<KeyPoint>& keyPoint_2, vector<DMatch>& matches)
+{
+  cv::Mat showImg;
+  drawMatches(img_1,keyPoint_1,img_2,keyPoint_2,matches,showImg);
+  namedWindow("show match",0);
+  imshow("show match",showImg);
+  waitKey(1);
+}
+
 static int img_assemble(cv::Mat& rgb, cv::Mat& depth, deque <cv::Mat>& twoFrames)
 {
   if(twoFrames.size() == 2)
@@ -23,12 +32,12 @@ static int img_assemble(cv::Mat& rgb, cv::Mat& depth, deque <cv::Mat>& twoFrames
 }
 
 //calculate R and t between to frames
-int getMotion(cv::Mat& rgb_stream, cv::Mat& depth_stream, deque <cv::Mat>& twoFrames, cv::Mat& R, cv::Mat& t)
+int getMotion(cv::Mat& rgb_stream, cv::Mat& depth_stream, deque <cv::Mat>& twoFrames, cv::Mat& R, cv::Mat& t, bool showMatch)
 {
   //get picture stream
   cv::Mat _rgb_stream = rgb_stream.clone();
   cv::Mat _depth_stream = depth_stream.clone();
-  cout << rgb_stream.depth() << " & " << depth_stream.depth() << endl;
+  //cout << rgb_stream.depth() << " & " << depth_stream.depth() << endl;
   if(_rgb_stream.empty() || _depth_stream.empty())
   {
     cout << "rgb stream or depth stream is empty!" << endl;
@@ -58,6 +67,8 @@ int getMotion(cv::Mat& rgb_stream, cv::Mat& depth_stream, deque <cv::Mat>& twoFr
       return 2;
     }
     cout<<"一共找到了"<<matches.size() <<"组匹配点"<<endl;
+    
+    if(showMatch) showMatchImage(img_1,img_2,keypoints_1,keypoints_2,matches);
     
     Mat K = ( Mat_<double> ( 3,3 ) << 309.414, 0, 167.38, 0, 312.495, 117.689, 0, 0, 1 );		//intrinsic matrix
     vector<Point3f> pts1, pts2;
@@ -201,10 +212,10 @@ void pose_estimation_3d3d (
 
     // compute q1*q2^T
     //Eigen::Matrix3d W = Eigen::Matrix3d::Zero();
-    Eigen::Matrix3d W;
-    W << 0,0,0,
-	 0,0,0,
-	 0,0,0;
+    Eigen::Matrix3d W = Eigen::Matrix3d::Zero();
+//     W << 0,0,0,
+// 	 0,0,0,
+// 	 0,0,0;
     for ( int i=0; i<N; i++ )
     {
         W += Eigen::Vector3d ( q1[i].x, q1[i].y, q1[i].z ) * Eigen::Vector3d ( q2[i].x, q2[i].y, q2[i].z ).transpose();
@@ -217,7 +228,7 @@ void pose_estimation_3d3d (
     Eigen::Matrix3d V = svd.matrixV();
     cout<<"U="<<U<<endl;
     cout<<"V="<<V<<endl;
-
+    
     Eigen::Matrix3d R_ = U* ( V.transpose() );
     Eigen::Vector3d t_ = Eigen::Vector3d ( p1.x, p1.y, p1.z ) - R_ * Eigen::Vector3d ( p2.x, p2.y, p2.z );
 

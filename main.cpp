@@ -11,8 +11,8 @@ using namespace std;
 using namespace rs;
 
 // Window size and frame rate
-int const INPUT_WIDTH 	= 320;
-int const INPUT_HEIGHT 	= 240;
+int const INPUT_WIDTH 	= 640;
+int const INPUT_HEIGHT 	= 480;
 int const FRAMERATE 	= 60;
 
 // Named windows
@@ -204,7 +204,7 @@ int main( ) try
 			_rs_camera->wait_for_frames( );
 
 		display_next_frame( );
-		getMotion(rgb_stream, depth_stream, twoFrames, R, t);
+		getMotion(rgb_stream, depth_stream, twoFrames, R, t, true);
 		//cout << rgb_stream.depth() << " & " << depth_stream.depth() << endl;
 	}
 

@@ -42,12 +42,17 @@ void bundleAdjustment(
 //assemble rgb and depth image to deque
 static int img_assemble(cv::Mat& rgb, cv::Mat& depth, deque <cv::Mat>& twoFrames);
 
+//show match of key point
+static void showMatchImage(cv::Mat& img_1, cv::Mat& img_2, 
+		    vector<KeyPoint>& keyPoint_1, vector<KeyPoint>& keyPoint_2, 
+		    vector<DMatch>& matches);
 
 //change main to function
 int getMotion(
     cv::Mat& rgb_stream, cv::Mat& depth_stream,
     deque <cv::Mat>& twoFrames,
-    cv::Mat& R, cv::Mat& t
+    cv::Mat& R, cv::Mat& t,
+    bool showMatch
 );
 
 
